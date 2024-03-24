@@ -16,37 +16,36 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
-
-const formSchema = z.object({
-  title: z.string().min(2, {
-    message: "title must be at least 2 characters.",
-  }),
-});
+import { createTaskSchema } from "@/schemas/createTaskSchema";
 
 export function CreateTaskForm() {
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof createTaskSchema>>({
+    resolver: zodResolver(createTaskSchema),
     defaultValues: {
       title: "",
+      description: "",
     },
   });
 
-  const createTask = api.post.create.useMutation({
+  const createTask = api.task.create.useMutation({
     onSuccess: () => {
       router.refresh();
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: z.infer<typeof createTaskSchema>) => {
     form.reset();
-    createTask.mutate({ title: values.title });
+    createTask.mutate({ title: values.title, description: values.description });
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="w-[300px] space-y-4"
+      >
         <FormField
           control={form.control}
           name="title"
@@ -60,6 +59,20 @@ export function CreateTaskForm() {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input placeholder="Mom asked me to..." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <Button type="submit">Submit</Button>
       </form>
     </Form>
