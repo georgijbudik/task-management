@@ -1,41 +1,53 @@
-import { z } from "zod";
+import { number, z } from "zod";
 
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
+import { createTaskSchema } from "@/schemas/createTaskSchema";
 
 export const taskRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
-
   create: protectedProcedure
-    .input(z.object({ title: z.string().min(1) }))
+    .input(createTaskSchema)
     .mutation(async ({ ctx, input }) => {
-      // simulate a slow db call
-
-      return ctx.db.post.create({
+      return ctx.db.task.create({
         data: {
-          name: input.title,
+          title: input.title,
+          description: input.description,
+          completed: false,
           createdBy: { connect: { id: ctx.session.user.id } },
         },
       });
     }),
 
-  getLatest: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.post.findFirst({
+  updateStatus: protectedProcedure
+    .input(z.object({ id: z.number(), completed: z.boolean() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.task.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          completed: input.completed,
+        },
+      });
+    }),
+
+  deleteTask: protectedProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.task.delete({
+        where: {
+          id: input.id,
+        },
+      });
+    }),
+
+  getAll: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.task.findMany({
       orderBy: { createdAt: "desc" },
       where: { createdBy: { id: ctx.session.user.id } },
     });
-  }),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
   }),
 });
