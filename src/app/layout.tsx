@@ -34,11 +34,11 @@ export const metadata = {
     locale: "en_US",
     type: "website",
     images: [
-      // {
-      //   url: "",
-      //   width: 800,
-      //   height: 600,
-      // },
+      {
+        url: "/images/og-image.png",
+        width: 800,
+        height: 600,
+      },
     ],
   },
 };
