@@ -20,7 +20,9 @@ const ProfileInfo = async () => {
       <DropdownMenu>
         <DropdownMenuTrigger className="focus:outline-none">
           <Avatar>
-            <AvatarImage src={session?.user?.image!} />
+            <AvatarImage
+              src={session?.user?.image ?? "https://github.com/shadcn.png"}
+            />
             <AvatarFallback>{nameFirstLetter}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
