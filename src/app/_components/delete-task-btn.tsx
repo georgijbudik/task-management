@@ -23,6 +23,7 @@ const DeleteTaskBtn = ({ id }: { id: number }) => {
       type="button"
       className="flex items-center justify-center"
       onClick={onDeleteTask}
+      disabled={deleteTask.isPending}
     >
       <Trash2 size={18} />
     </Button>

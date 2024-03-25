@@ -66,14 +66,22 @@ export function CreateTaskForm() {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input placeholder="Mom asked me to..." {...field} />
+                <Input placeholder="Firstly, i need to..." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <div className="flex justify-center">
+          <Button
+            disabled={createTask.isPending}
+            type="submit"
+            className="w-[150px] rounded-full bg-white/10 px-10 py-6 text-base font-semibold no-underline transition duration-200 hover:bg-white hover:bg-white/20"
+          >
+            {createTask.isPending ? "Creating..." : "Create"}
+          </Button>
+        </div>
       </form>
     </Form>
   );
