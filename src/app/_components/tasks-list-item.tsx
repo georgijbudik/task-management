@@ -26,7 +26,7 @@ const TasksListItem = ({
         <CheckboxComplete id={id} completed={completed} />
         <DeleteTaskBtn id={id} />
       </li>
-      <div className="inline-flex h-[2px] w-full bg-gray-400"></div>
+      <div className="inline-flex h-[1px] w-full bg-gray-400"></div>
     </>
   );
 };
