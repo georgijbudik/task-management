@@ -10,6 +10,7 @@ const TasksList = async () => {
         {tasks.map(({ id, title, description, completed }) => {
           return (
             <TasksListItem
+              key={id}
               id={id}
               title={title}
               description={description!}
