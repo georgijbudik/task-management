@@ -17,6 +17,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { createTaskSchema } from "@/schemas/createTaskSchema";
+import { toast } from "sonner";
 
 export function CreateTaskForm() {
   const router = useRouter();
@@ -31,7 +32,11 @@ export function CreateTaskForm() {
 
   const createTask = api.task.create.useMutation({
     onSuccess: () => {
+      toast.success("You have successfuly created a task");
       router.refresh();
+    },
+    onError: () => {
+      toast.error("Error. Please try again");
     },
   });
 

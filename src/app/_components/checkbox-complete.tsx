@@ -2,6 +2,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { api } from "@/trpc/react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const CheckboxComplete = ({
   id,
@@ -14,7 +15,13 @@ const CheckboxComplete = ({
 
   const updateTask = api.task.updateStatus.useMutation({
     onSuccess: () => {
+      if (!completed) {
+        toast.success("Your task is completed now");
+      }
       router.refresh();
+    },
+    onError: () => {
+      toast.error("Error. Please try again");
     },
   });
 

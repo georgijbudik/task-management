@@ -8,7 +8,7 @@ const AuthLink = async () => {
     <Link
       href={session ? "/api/auth/signout" : "/api/auth/signin"}
       className={cn(
-        "rounded-full bg-white/10 px-10 py-4 text-lg font-semibold no-underline transition hover:bg-white/20",
+        "rounded-full bg-white/10 px-10 py-3 text-lg font-semibold no-underline transition hover:bg-white/20",
         session && "py-3 text-sm",
       )}
     >

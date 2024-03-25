@@ -18,15 +18,15 @@ const TasksListItem = ({
     <>
       <li key={id} className="flex items-center justify-between">
         <div className="flex items-center gap-10">
-          <h2 className="text-lg">{title}</h2>
-          <p className="block w-[150px] overflow-hidden truncate text-wrap">
-            {description}
-          </p>
+          <h2 className="w-[150px] text-lg">{title}</h2>
+          <p className="truncate">{description}</p>
         </div>
-        <CheckboxComplete id={id} completed={completed} />
-        <DeleteTaskBtn id={id} />
+        <div className="flex items-center gap-4">
+          <CheckboxComplete id={id} completed={completed} />
+          <DeleteTaskBtn id={id} />
+        </div>
       </li>
-      <div className="inline-flex h-[1px] w-full bg-gray-400"></div>
+      <div className="block h-[1px] w-full bg-gray-400"></div>
     </>
   );
 };

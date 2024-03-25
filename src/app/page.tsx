@@ -5,6 +5,7 @@ import ProfileInfo from "./_components/profile-info";
 import AuthLink from "./_components/auth-link";
 import Title from "@/components/ui/title";
 import TasksList from "./_components/tasks-list";
+import { Toaster } from "@/components/ui/sonner";
 
 export default async function Home() {
   const session = await getServerAuthSession();
@@ -38,6 +39,7 @@ export default async function Home() {
         </div>
         <BackgroundBeams />
       </div>
+      <Toaster />
     </main>
   );
 }
